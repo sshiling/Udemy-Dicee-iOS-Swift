@@ -2,47 +2,55 @@
 //  ViewController.swift
 //  Dicee
 //
-//  Created by Sergiy SHILINGOV on 10/22/18.
-//  Copyright © 2018 Sergiy SHILINGOV. All rights reserved.
+//  Created by Angela Yu on 25/08/2015.
+//  Copyright (c) 2015 London App Brewery. All rights reserved.
 //
 
 import UIKit
 
+
+var diceArray : Array = [""]
+var firstRandomIndex : Int = 0
+var secondRandomIndex : Int = 0
+
+
 class ViewController: UIViewController {
 
-    var randomDiceIndex1 : Int = 0
-    var randomDiceIndex2 : Int = 0
+    @IBOutlet weak var firstDiceImageView: UIImageView!
     
-    let dicesArray : [String] = ["dice1", "dice2", "dice3", "dice4", "dice5", "dice6"]
-    
-    @IBOutlet weak var diceImageView1: UIImageView!
-    @IBOutlet weak var diceImageView2: UIImageView!
-    
-    @IBAction func rollButtonPressed(_ sender: UIButton) {
-        updateDiceImages()
-    }
-    
+    @IBOutlet weak var secondDiceImageView: UIImageView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateDiceImages()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    func updateDiceImages() {
-        randomDiceIndex1 = Int(arc4random_uniform(6))
-        randomDiceIndex2 = Int(arc4random_uniform(6))
+ 
+        diceArray = ["dice1", "dice2", "dice3", "dice4", "dice5", "dice6"]
         
-        diceImageView1.image = UIImage(named: dicesArray[randomDiceIndex1])
-        diceImageView2.image = UIImage(named: dicesArray[randomDiceIndex2])
+    }
+
+    
+    
+    @IBAction func rollPressed(_ sender: AnyObject) {
+        
+        updateDiceImages()
     }
     
-    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
-        updateDiceImages()
+    func updateDiceImages() {
+        
+        firstRandomIndex = Int(arc4random_uniform(6))
+        secondRandomIndex = Int(arc4random_uniform(6))
+        
+        firstDiceImageView.image = UIImage(named: diceArray[firstRandomIndex])
+        secondDiceImageView.image = UIImage(named: diceArray[secondRandomIndex])
     }
+    
+    
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
+            updateDiceImages()
+        }
+    }
+    
+
+
 }
 
